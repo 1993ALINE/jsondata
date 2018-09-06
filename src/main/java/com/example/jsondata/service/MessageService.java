@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-
 public class MessageService {
     private MessageRepository messageRepository;
 
@@ -27,7 +26,7 @@ public class MessageService {
     }
 
     public void save(List<Message> messages) {
-        messageRepository.saveAll(messages);
+        messageRepository.save(messages);
     }
 
 }

@@ -3,24 +3,20 @@ package com.example.jsondata.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 
 @Data
 @AllArgsConstructor
-@Entity
+@Entity(name = "messages")
 public class Message {
 
 
     @Id
     @GeneratedValue( strategy = GenerationType.AUTO )
-
-
     private Long id;
 
+    @Column(name = "text")
     private String text;
 
 

@@ -87,6 +87,12 @@
             <artifactId>mysql-connector-java</artifactId>
             <scope>runtime</scope>
         </dependency>
+        <!--View Template-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+
         <!--<dependency>-->
             <!--<groupId>com.google.firebase</groupId>-->
             <!--<artifactId>firebase-admin</artifactId>-->

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="UTF-8"/>
+    <title>message List</title>
+</head>
+<body id="bodyId">
+
+<script src="https://www.gstatic.com/firebasejs/5.0.4/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.0.4/firebase-database.js"></script>
+<script th:inline="javascript">
+    // Initialize Firebase
+    var config = {
+        apiKey: "AIzaSyCNd4wydhNBp9Tk-gNwuGJ_y6w9C5o8t3M",
+        authDomain: "researchapp-e2260.firebaseapp.com",
+        databaseURL: "https://researchapp-e2260.firebaseio.com",
+        projectId: "researchapp-e2260",
+        storageBucket: "researchapp-e2260.appspot.com",
+        messagingSenderId: "884451188715"
+    };
+    firebase.initializeApp(config);
+    // Get a reference to the database service
+    var database = firebase.database().ref('/');
+    var stringToShowOnBody = '';
+    database.on('value', function (snapshot) {
+        console.log(snapshot.val());
+    });
+
+
+    // Builds the HTML Table out of myList.
+    /*<![CDATA[*/
+
+    /*]]>*/
+
+
+</script>
+</body>
+</html>

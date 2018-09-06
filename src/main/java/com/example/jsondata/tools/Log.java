@@ -3,7 +3,7 @@ package com.example.jsondata.tools;
 import org.apache.log4j.Logger;
 
 public class Log {
-	private static final Logger logger = Logger.getLogger("com.exatech.groupsms");
+	private static final Logger logger = Logger.getLogger("com.example.jsondata");
 
 	public static void info(String msg) {
 		logger.info(msg);

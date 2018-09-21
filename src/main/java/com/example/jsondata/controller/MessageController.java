@@ -5,6 +5,8 @@ import com.example.jsondata.model.Message;
 import com.example.jsondata.service.MessageService;
 import com.example.jsondata.tools.Log;
 import com.google.firebase.database.*;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -31,8 +33,9 @@ public class MessageController {
         return "messageListPage";
     }
 
+    @ResponseBody
     @PostMapping("")
-    public String showListOfMessagePage(@RequestParam(value = "text",defaultValue = "")String text) {
+    public ResponseEntity showListOfMessagePage(@RequestParam(value = "text",defaultValue = "")String text) {
         Log.info("show  Message list");
         Message message = new Message();
         message.setText(text);
@@ -46,6 +49,6 @@ public class MessageController {
             }else
                 Log.error("failed to save");
         });
-        return "redirect:/messages";
+        return new ResponseEntity(HttpStatus.OK);
     }
 }

@@ -14,10 +14,12 @@
 
     <div class="d-flex justify-content-center">
 
-        <form method="post" action="/messages" style="margin: 50px">
+        <form class="jumbotron" style="margin: 50px">
 
-            <input type="text" required="required" name="text" />
-            <input type="submit" value="save" />
+
+            <textarea type="text" id="text" required="required" name="text" />
+
+            <button style="float: right;margin-left: 10px" type="button" onclick="saveMesssge()" class="btn btn-primary">save </button>
             <div id="message"></div>
 
         </form>
@@ -69,6 +71,14 @@
         return returnArr;
     };
 
+   function saveMesssge(){
+      var text= $('#text').val();
+       $.post('/messages', { text: text},
+           function(returnedData){
+               console.log(returnedData);
+               $('#text').val('');
+           });
+    }
 </script>
 </body>
 </html>

@@ -29,4 +29,7 @@ public class MessageService {
         messageRepository.save(messages);
     }
 
+    public Iterable<Message> findAll() {
+    return messageRepository.findAll();
+    }
 }

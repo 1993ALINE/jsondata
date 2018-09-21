@@ -4,9 +4,31 @@
 <head>
     <meta charset="UTF-8"/>
     <title>message List</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 </head>
-<body id="bodyId">
+<body >
+<div class="container">
 
+
+    <div class="d-flex justify-content-center">
+
+        <form method="post" action="/messages" style="margin: 50px">
+
+            <input type="text" required="required" name="text" />
+            <input type="submit" value="save" />
+            <div id="message"></div>
+
+        </form>
+    </div>
+
+
+<ul class="list-group">
+</ul>
+
+
+</div>
 <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase-database.js"></script>
 <script th:inline="javascript">
@@ -21,18 +43,31 @@
     };
     firebase.initializeApp(config);
     // Get a reference to the database service
-    var database = firebase.database().ref('/');
-    var stringToShowOnBody = '';
-    database.on('value', function (snapshot) {
-        console.log(snapshot.val());
-    });
+    var database = firebase.database().ref('/ListOfMessage');
 
-
-    // Builds the HTML Table out of myList.
     /*<![CDATA[*/
-
+    database.on('value', function (snapshot) {
+        listOfMessageElement=[];
+      var  listOfMessageElement=snapshotToArray(snapshot);
+        console.log(listOfMessageElement);
+        listOfMessageElement.forEach(function (message) {
+            $('.list-group').append("<li class='list-group-item d-flex justify-content-between align-items-center'>" + message.text + " <span class='badge badge-primary badge-pill'>"+message.sendAt+"</span></li>")
+        });
+    });
     /*]]>*/
 
+
+    function snapshotToArray(snapshot) {
+        var returnArr = [];
+        snapshot.forEach(function(childSnapshot) {
+            var item = childSnapshot.val();
+            item.key = childSnapshot.key;
+
+            returnArr.push(item);
+        });
+
+        return returnArr;
+    };
 
 </script>
 </body>

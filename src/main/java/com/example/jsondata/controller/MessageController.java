@@ -1,12 +1,13 @@
 package com.example.jsondata.controller;
 
 
+import com.example.jsondata.model.Message;
 import com.example.jsondata.service.MessageService;
 import com.example.jsondata.tools.Log;
 import com.google.firebase.database.*;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -22,24 +23,29 @@ public class MessageController {
         this.messageService = messageService;
     }
 
-    @GetMapping("/list")
-    public String showListOfMessagePage() {
-        Log.info("show  Message list");
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("messages");
+    @GetMapping("")
+    public String showListOfMessage(Model model){
 
-        ref.setValueAsync("Message data ="+new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+        model.addAttribute("listOfMessage",messageService.findAll());
 
-        ref.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Log.info(dataSnapshot.getKey());
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.error(databaseError.toString());
-            }
-        });
         return "messageListPage";
+    }
+
+    @PostMapping("")
+    public String showListOfMessagePage(@RequestParam(value = "text",defaultValue = "")String text) {
+        Log.info("show  Message list");
+        Message message = new Message();
+        message.setText(text);
+        message.setSendAt(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("ListOfMessage").push();
+        message.setId(ref.getKey());
+        messageService.save(message);
+        ref.setValue(message,( databaseError,  databaseReference)->{
+            if(databaseError==null) {
+                Log.info("Message Save Success");
+            }else
+                Log.error("failed to save");
+        });
+        return "redirect:/messages";
     }
 }

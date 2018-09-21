@@ -11,14 +11,15 @@ import javax.persistence.*;
 @Entity(name = "messages")
 public class Message {
 
-
     @Id
-    @GeneratedValue( strategy = GenerationType.AUTO )
-    private Long id;
+    @Column(name = "id")
+    private String id;
 
     @Column(name = "text")
     private String text;
 
+    @Column(name = "send_at")
+    private String sendAt;
 
     public Message() {}
 }

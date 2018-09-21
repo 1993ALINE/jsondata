@@ -28,21 +28,21 @@ public class MessageController {
     @GetMapping("")
     public String showListOfMessage(Model model){
 
-        model.addAttribute("listOfMessage",messageService.findAll());
+//        model.addAttribute("listOfMessage",messageService.findAll());
 
         return "messageListPage";
     }
 
     @ResponseBody
     @PostMapping("")
-    public ResponseEntity showListOfMessagePage(@RequestParam(value = "text",defaultValue = "")String text) {
-        Log.info("show  Message list");
+    public ResponseEntity showListOfMessagePage(@RequestBody String text) {
+        Log.info("show  Message list"+text);
         Message message = new Message();
         message.setText(text);
         message.setSendAt(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("ListOfMessage").push();
         message.setId(ref.getKey());
-        messageService.save(message);
+//        messageService.save(message);
         ref.setValue(message,( databaseError,  databaseReference)->{
             if(databaseError==null) {
                 Log.info("Message Save Success");

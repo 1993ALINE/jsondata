@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<th:block th:include="fragments/headerinc :: head"></th:block>
+<head>
+    <meta charset="UTF-8"/>
+    <title>Login</title>
+</head>
+<body>
+<div class="container">
+    <div th:if="${redMessage}" th:text="${redMessage}" class="alert alert-danger" role="alert"></div>
+    <div th:if="${greenMessage}" th:text="${greenMessage}" class="alert alert-secondary" role="alert"></div>
+
+
+    <div class="alert alert-info" role="alert">
+        Welcome <span style="color: green" th:text="${user.name}"></span>
+        <br/>
+        your Email <span style="color: green" th:text="${user.email}"></span>
+    </div>
+    <table class="table">
+        <thead class="thead-light">
+        <tr>
+            <th scope="col">id</th>
+            <th scope="col">Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">password</th>
+            <th scope="col">State</th>
+            <th scope="col">edit</th>
+            <th scope="col">disable</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user : ${listOfUser}">
+            <th scope="row" th:text="${user.id}"></th>
+            <td th:text="${user.name}">Name</td>
+            <td th:text="${user.email}">email</td>
+            <td th:text="${user.password}">password</td>
+            <td th:if="${user.disabled}" style="color: red">Disabled</td>
+            <td th:if="${!user.disabled}" style="color: green">Active</td>
+            <td><a th:href="@{/users/{id}/edit(id=${user.id})}">edit</a></td>
+            <td><a th:href="@{/users/{id}/delete(id=${user.id})}">disable</a></td>
+        </tr>
+
+        </tbody>
+    </table>
+
+
+</div>
+<div th:replace="fragments/footerinc :: footer"/>
+</body>
+
+</html>
